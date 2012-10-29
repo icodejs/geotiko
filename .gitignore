@@ -1,0 +1,6 @@
+node_modules
+.DS_Store
+bootstrap
+
+# no way :)
+lib/config.js

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta charset='utf-8'>
+    <title>Tiko</title>
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="bootstrap/css/docs.css" rel="stylesheet">
+    <link href="bootstrap/js/google-code-prettify/prettify.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Tiko Geo Location</h1>
+      <section>
+        <form class="form-inline">
+          <span class="help-block">Enter the location you'd like to retriev data for:</span>
+          <input type="text" class="location text" value="tiko">
+          <button type="submit" class="search btn btn-primary">search</button>
+        </form>
+      </section>
+
+      <section>
+        <div id="map"></div>
+      </section>
+
+      <section class="output" style="display:none;">
+        <pre class="prettyprint lang-js"></pre>
+      </section>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>
