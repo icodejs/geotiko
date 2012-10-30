@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   <meta charset='utf-8'>
+    <title>Tiko</title>
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="bootstrap/css/docs.css" rel="stylesheet">
+    <link href="bootstrap/js/google-code-prettify/prettify.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Geotiko Geo Location</h1>
+      <section>
+        <form class="form-inline">
+          <span class="help-block">Enter the locations you would like to measure distance between:</span>
+          <input type="text" id="location1" class="location text" value="tiko, Cameroon">
+          <input type="text" id="location2" class="location text" value="buea, Cameroon">
+          <button type="submit" class="search btn btn-primary">Submit</button>
+        </form>
+      </section>
+
+      <section>
+        <div id="map"></div>
+      </section>
+
+      <section class="output" style="display:none;">
+        <pre class="prettyprint lang-js"></pre>
+      </section>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/gt.main.js"></script>
+    <script type="text/javascript">
+      $(function () {
+        'use strict';
+
+        var elements = {
+          location1     : $('#location1'),
+          location2     : $('#location2'),
+          map          : $('#map'),
+          output       : $('.output'),
+          searchButton : $('.search')
+        },
+        cameroon = {
+          lat : 7.369721999999999,
+          lng : 12.354722
+        };
+
+        GT.main.init(elements);
+
+        elements.searchButton.on('click', function (e) {
+          e.preventDefault();
+
+          var
+          map,
+          loc1      = {},
+          loc2      = {},
+          location1 = elements.location1.val(),
+          location2 = elements.location2.val();
+
+          // move this logic to the server and use a control flow library to perform
+          // 2 asynchronous requests to the Google maps api.
+          GT.main.getLatLong(location1, function (err, lat, lng) {
+            if (err) {
+              throw err;
+            }
+
+            loc1.lat = lat;
+            loc1.lng = lng;
+
+            GT.main.getLatLong(location2, function (err, lat, lng) {
+              if (err) throw err;
+
+              loc2.lat = lat;
+              loc2.lng = lng;
+              map      = GT.main.renderMap(loc1.lat, loc1.lng);
+
+              GT.main.setMapMarkers(map, loc1.lat, loc1.lng);
+              GT.main.setMapMarkers(map, loc2.lat, loc2.lng);
+              GT.main.getDistance(loc1, loc2, function (err, distance) {
+                if (err) {
+                  throw err;
+                }
+                renderOutput(distance);
+              });
+            });
+          });
+        }); // end searchButton click
+
+
+        function renderOutput(text) {
+          elements.output
+              .find('pre')
+                .append(text)
+            .end().fadeIn();
+        }
+
+      });
+    </script>
+  </body>
+</html>

@@ -8,14 +8,13 @@
     <link href="bootstrap/css/docs.css" rel="stylesheet">
     <link href="bootstrap/js/google-code-prettify/prettify.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
   </head>
   <body>
     <div class="container">
-      <h1>Tiko Geo Location</h1>
+      <h1>Geotiko Geo Location</h1>
       <section>
         <form class="form-inline">
-          <span class="help-block">Enter the location you'd like to retriev data for:</span>
+          <span class="help-block">Enter the location you'd like to retrieve data for:</span>
           <input type="text" class="location text" value="tiko">
           <button type="submit" class="search btn btn-primary">search</button>
         </form>
@@ -30,7 +29,46 @@
       </section>
     </div>
 
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="js/index.js"></script>
+    <script src="js/gt.main.js"></script>
+    <script type="text/javascript">
+      $(function () {
+        'use strict';
+
+        var elements = {
+          location     : $('.location'),
+          map          : $('#map'),
+          output       : $('.output'),
+          searchButton : $('.search')
+        };
+
+        GT.main.init(elements);
+
+        elements.searchButton.on('click', function (e) {
+          e.preventDefault();
+
+          var map, location = elements.location.val();
+
+          if (location.length) {
+            GT.main.getLatLong(location, function (err, lat, lng, response) {
+              if (err) {
+                throw err;
+              }
+
+              map = GT.main.renderMap(lat, lng);
+
+              GT.main.setMapMarkers(map, lat, lng);
+
+              elements.output
+                  .find('pre')
+                    .text(JSON.stringify(response, null, 2))
+                .end().fadeIn();
+            });
+          }
+        });
+
+      });
+    </script>
   </body>
 </html>
