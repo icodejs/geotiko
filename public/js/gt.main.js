@@ -76,10 +76,10 @@ GT.main = (function (window, document, $, undefined) {
             from     = origins[i];
             to       = destinations[j];
 
-            output.push('distance: ', distance + '\n');
-            output.push('duration: ', duration + '\n');
-            output.push('from: ', from + ': ' + loc1.lat + ', ' + loc1.lng + '\n');
-            output.push('to: ', to + ': ' + loc2.lat + ', ' + loc2.lng + '\n');
+            output.push('Distance: ', distance + '\n');
+            output.push('Duration: ', duration + '\n');
+            output.push('From: ', from + ': ' + loc1.lat + ', ' + loc1.lng + '\n');
+            output.push('To: ', to + ': ' + loc2.lat + ', ' + loc2.lng + '\n');
 
             callback(null, output.join(''));
           }
